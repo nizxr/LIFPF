@@ -52,4 +52,13 @@ let filter_coded: 'a list -> 'a list =
 ;;
 
 (*11*)
-let 
+let
+
+;;
+
+(*12*)
+let premiers_list (a: int): int list -> int list =
+  for_all(fun v -> v <= a) &&
+  init()
+  map(fun x -> x mod )
+;;
