@@ -1,3 +1,24 @@
+ocaml
+
+3*2+5/2;;
+
+3.14 +. 5.;;
+
+"ceci est " ^ "un test"
+
+3 < 2;;
+
+int_of_float 5.0 ;;
+
+let x1 = 3.5 +. float_of_int 2
+in x1 +. 3.0;;
+
+let x1 = 3.5 +. float_of_int 2 in
+let x2 = x1 *. x1 in
+x2 *. 2.0 ;;
+
+(if true then 3 else 5) > 4 ;; 
+
 (**
 [discriminant a b c] calcule le discriminant d'un trinôme.
 Cette fonction est utile pour trouver les racines d'un trinôme.
@@ -6,54 +27,91 @@ Cette fonction est utile pour trouver les racines d'un trinôme.
 @param c le coefficient d'ordre 0
 @return le discriminant
 *)
-let discriminant (a:float) (b:float) (c:float) : float = b *. b -. 4.0 *. a *. c;;
+let discriminant (a : float) (b : float) (c : float) : float = 
+  b *. b -. 4. *. a *. c ;;
 
-type couleur = Rouge | Jaune | Bleu | Violet | Orange | Vert| RJB of int * int * int;;
 
-let nom_couleur c : string =
+discriminant 2.0 8.0 8.0;;
+
+
+type couleur = Rouge | Jaune | Bleu ;;
+
+Rouge;;
+Rouge = Rouge ;; 
+Rouge != Bleu ;; 
+Bleu > Jaune ;; 
+
+type couleur = Rouge | Jaune | Bleu | Violet | Orange | Vert;;
+
+type couleur = Rouge | Jaune | Bleu | Violet | Orange | Vert | RJB of int * int * int;;
+
+
+(3, 5, 6);;
+
+match c with
+| Rouge -> "rouge"
+| Bleu -> "bleu"
+| Jaune -> "jaune"
+| _ -> "mélange"
+
+
+let nom_couleur (c : couleur) : string = 
   match c with
   | Rouge -> "rouge"
-  | Bleu -> "bleu"
   | Jaune -> "jaune"
+  | Bleu -> "bleu"
   | Violet -> "violet"
   | Orange -> "orange"
   | Vert -> "vert"
-  | RJB (r, j, b) -> "mélange";;
-  
+  | RJB (_,_,_) -> "mélange"
 
-let paragraphe_bottles (n:int) : string =
-match n with
-  | 0 -> "No more bottles of beer on the wall, no more bottles of beer." ^ "\n" ^ "Go to the store and buy some more, 99 bottles of beer on the wall."
-  | 1 -> "1 bottle of beer on the wall, 1 bottle of beer." ^ "\n" ^ "Take one down and pass it around, no more bottles of beer on the wall."
-  | 2 -> "2 bottles of beer on the wall, 2 bottles of beer." ^ "\n" ^ "Take one down and pass it around, 1 bottle of beer on the wall."
-  | n -> string_of_int n ^ " bottles of beer on the wall, " ^ string_of_int n ^ " bottles of beer." ^ "\n" ^ "Take one down and pass it around, " ^ string_of_int (n-1) ^ " bottles of beer on the wall."
-;;
+  nom_couleur (RJB (2,0,6)) ;;
 
+  (**
+  Renvoie la somme des n premiers entiers
+  @parm n le nombre d'entiers à sommer
+  @return la somme    
+  *)
+  let rec sum_n (n : int) : int = 
+    if n <= 0
+      then 0
+  else n + sum_n (n-1) ;;
 
-let rec factorielle (n:int): int =
-  if n = 0
-  then 1
-  else n * factorielle (n-1);;
-
-let rec sum_f (l: float list) : float = 
-  match l with
-  | [] -> 0.0
-| v :: l2 -> v +. sum_f l2;;
-
-let rec liste_n_0 (n:int): int list =
+    (**
+  Renvoie la factorielle de n
+  @parm n un nombre 
+  @return la factorielle de n    
+  *)
+  let rec factorielle (n : int) : int = 
   match n with
-  | 0 -> [0]
-  | n -> n :: liste_n_0 (n-1);;
-
-let rec bottles_of_list (l:int list) : string list =
-  match l with
-  | [] -> []
-  | v :: l2 -> paragraphe_bottles v :: bottles_of_list l2
+  | 0 -> 1
+  | 1 -> 1
+  | v -> v * factorielle(v-1)
 ;;
 
-let chanson_99_bottles = 
-  let rec print (n: int): string = 
-    match n with
-    | 0 -> paragraphe_bottles 0
-    | n -> paragraphe_bottles n ^ "\n\n" ^ print (n-1)
-  in print 99
+factorielle 4;;
+
+[1; 2; 3; 4] ;;
+1 :: 2 :: 3 ::[] ;;
+
+(**
+Cette fonction calcule la longueur d'une liste de string
+@param l la liste dont on veut la longueur
+@return la longueur de l    
+*)
+let rec longueur (l : string list) : int =
+  match l with 
+  | [] -> 0
+  | _ :: l2 -> 1 + longueur l2
+;;
+
+(**
+Cette fonction fait la somme des éléments d'une list
+@param l la liste sur laquelle on fait la somme
+@return somme des elements d'une liste
+*)
+let rec sum_f (l : float list) : float =
+  match l with
+  | [] -> 0.
+  | v :: l2 -> v +. sum_f l2
+;;
